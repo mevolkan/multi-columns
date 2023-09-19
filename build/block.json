@@ -7,6 +7,12 @@
   "category": "design",
   "icon": "columns",
   "description": "Example block scaffolded with Create Block tool.",
+  "keywords": [
+    "newspaper",
+    "columns",
+    "flow",
+    "text"
+  ],
   "example": {},
   "supports": {
     "html": true,
@@ -14,14 +20,13 @@
     "spacing": {
       "margin": true,
       "padding": true
-    }
+    },
+    "align": [
+      "wide",
+      "full"
+    ]
   },
   "attributes": {
-    "content": {
-      "type": "string",
-      "source": "html",
-      "selector": "p"
-    },
     "style": {
       "type": "object",
       "default": {
