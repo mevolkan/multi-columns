@@ -15,8 +15,9 @@ import {
 	useBlockProps,
 	RichText,
 	InspectorControls,
+	PanelColorSettings
 } from "@wordpress/block-editor";
-import { RangeControl, PanelBody } from "@wordpress/components";
+import { RangeControl, PanelBody, SelectControl } from "@wordpress/components";
 import NumberControl from "./components/number-control";
 /**
  * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
@@ -48,8 +49,17 @@ export default function Edit({ attributes, setAttributes }) {
 	const onChangeColumnGap = (val) => {
 		setAttributes({ columnGap: Number(val) });
 	};
-	const { columnCount, columnWidth, columnGap } = attributes;
-	const columnStyles = { columnCount, columnWidth, columnGap };
+	const onChangeColumnRuleStyle = (val) => {
+		setAttributes({ columnRuleStyle: val });
+	};
+	const onChangeColumnRuleWidth = (val) => {
+		setAttributes({ columnRuleWidth: Number(val) });
+	};
+	const onChangeColumnRuleColor = (val) => {
+		setAttributes({ columnRuleColor: val });
+	};
+	const { columnCount, columnWidth, columnGap, columnRuleStyle, columnRuleWidth, columnRuleColor} = attributes;
+	const columnStyles = { columnCount, columnWidth, columnGap, columnRuleStyle, columnRuleWidth, columnRuleColor };
 	return (
 		<>
 			<InspectorControls>
@@ -77,6 +87,37 @@ export default function Edit({ attributes, setAttributes }) {
 						max={100}
 					/>
 				</PanelBody>
+				<PanelBody title="Column Separator" initialOpen={false}>
+					<SelectControl
+					label = "Separator Style"
+					onChange={onChangeColumnRuleStyle}
+					value={columnRuleStyle}
+					options = {[
+						{label: 'none',value: 'none'},
+						{label: 'Solid',value: 'solid'},
+						{label: 'Dotted',value: 'dotted'},
+						{label: 'Dashed',value: 'dashed'},
+						{label: 'Double',value: 'double'},
+						{label: 'Groove',value: 'groove'},
+						{label: 'Ridge',value: 'ridge'}
+					]}
+					/>
+					<NumberControl
+					label = "Width"
+					onChange ={onChangeColumnRuleWidth}
+					value = {columnRuleWidth}
+					min = {1}
+					max = {8}
+					/>
+				</PanelBody>
+				<PanelColorSettings>
+					title = "Colour settings"
+					colorSettings = {[{
+						label: 'Separator color',
+						value: columnRuleColor,
+						onChange: onChangeColumnRuleColor,
+					}]}
+				</PanelColorSettings>
 			</InspectorControls>
 
 			<RichText
